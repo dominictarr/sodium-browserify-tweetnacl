@@ -1,5 +1,5 @@
 
-var tweetnacl = require('tweetnacl')
+var tweetnacl = require('tweetnacl/nacl-fast')
 var Sha256 = require('sha.js/sha256')
 exports.crypto_hash_sha256 = function (msg) {
   return new Sha256().update(msg).digest()
@@ -22,7 +22,7 @@ exports.crypto_sign = tweetnacl.sign
 exports.crypto_sign_open = tweetnacl.sign.open
 
 exports.crypto_sign_verify_detached = function (sig, msg, pkey) {
-  tweetnacl.sign.detached.verify(msg, sig, pkey)
+  return tweetnacl.sign.detached.verify(msg, sig, pkey)
 }
 
 exports.crypto_box_keypair = function () {
