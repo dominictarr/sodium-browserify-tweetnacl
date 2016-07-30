@@ -8,6 +8,7 @@
     "url": "git://github.com/dominictarr/sodium-browserify-tweetnacl.git"
   },
   "dependencies": {
+    "chloride-test": "^1.1.0",
     "ed2curve": "^0.1.4",
     "sha.js": "^2.4.5",
     "tweetnacl": "^0.14.1",
