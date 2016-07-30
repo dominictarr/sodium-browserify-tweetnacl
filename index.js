@@ -39,7 +39,7 @@ exports.crypto_sign_verify_detached = function (sig, msg, pkey) {
 }
 
 exports.crypto_box_keypair = function () {
-  return tweetnacl.box.keyPair()
+  return fix_keys(tweetnacl.box.keyPair())
 }
 
 
