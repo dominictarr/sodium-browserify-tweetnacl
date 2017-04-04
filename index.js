@@ -87,7 +87,7 @@ exports.crypto_auth_verify = function (mac, msg, key) {
   var _mac = exports.crypto_auth(msg, key)
   var d = true
   //constant time comparson
-  for(var i = 0; i < auth.length; i++) {
+  for(var i = 0; i < _mac.length; i++) {
     d = d && (_mac[i] === mac[i])
   }
   return +!d
