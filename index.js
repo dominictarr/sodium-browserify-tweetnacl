@@ -4,6 +4,19 @@ var Sha256 = require('sha.js/sha256')
 var ed2curve = require('ed2curve')
 var auth = require('tweetnacl-auth')
 
+//low order points that should not be allowed to scalarmult with:
+var low_order = [
+  '00000000000000000000000000000000000000000000000000000000000000000',
+  '0100000000000000000000000000000000000000000000000000000000000000', //1 in little endian
+  'e0eb7a7c3b41b8ae1656e3faf19fc46ada098deb9c32b1fd866205165f49b800',
+  '5f9c95bca3508c24b1d0b1559c83ef5b04445cc4581c8e86d8224eddd09f1157',
+  'ecffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff7f',
+  'edffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff7f',
+  'eeffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff7f'
+].map(function (e) {
+  return Buffer.from(e, 'hex')
+})
+
 exports.crypto_hash_sha256 = function (msg) {
   return new Sha256().update(msg).digest()
 }
@@ -72,8 +85,12 @@ exports.crypto_box_open_easy = function (ctxt, nonce, pkey, skey) {
   return r ? new Buffer(r) : null
 }
 
-exports.crypto_scalarmult = function (pk, sk) {
-  return new Buffer(tweetnacl.scalarMult(pk, sk))
+exports.crypto_scalarmult = function (sk, pk) {
+  for(var i = 0; i < low_order.length; i++) {
+    console.log('low order:', low_order[i], sk)
+    if(low_order[i].compare(pk) === 0) throw new Error('weak public key detected')
+  }
+  return new Buffer(tweetnacl.scalarMult(sk, pk))
 }
 
 //exports.crypto_auth = tweetnacl.auth
@@ -98,5 +115,4 @@ exports.randombytes = function (buf) {
   b.copy(buf)
   return null
 }
-
 
