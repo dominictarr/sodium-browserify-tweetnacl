@@ -11,7 +11,7 @@
     "chloride-test": "^1.1.0",
     "ed2curve": "^0.1.4",
     "sha.js": "^2.4.8",
-    "tweetnacl": "^0.14.1",
+    "tweetnacl": "^1.0.1",
     "tweetnacl-auth": "^0.3.0"
   },
   "devDependencies": {
