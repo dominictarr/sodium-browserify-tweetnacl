@@ -87,7 +87,6 @@ exports.crypto_box_open_easy = function (ctxt, nonce, pkey, skey) {
 
 exports.crypto_scalarmult = function (sk, pk) {
   for(var i = 0; i < low_order.length; i++) {
-    console.log('low order:', low_order[i], sk)
     if(low_order[i].compare(pk) === 0) throw new Error('weak public key detected')
   }
   return new Buffer(tweetnacl.scalarMult(sk, pk))
